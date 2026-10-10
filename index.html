@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>성과급 계산기</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f5fa;color:#18243b;font-family:system-ui,sans-serif}
+main{max-width:760px;margin:auto;padding:32px 18px}
+h1{margin:8px 0;font-size:30px}
+p{color:#647087;line-height:1.6}
+.card{background:white;border-radius:20px;padding:24px;margin:20px 0;box-shadow:0 8px 30px #18243b08}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+label{display:block;font-size:14px;font-weight:600}
+input{width:100%;padding:14px;margin-top:8px;border:1px solid #d8deea;border-radius:10px;font-size:18px}
+input:focus{outline:2px solid #6476ff}
+small{display:block;color:#647087;margin-top:7px;line-height:1.5}
+.result{background:#243b80;color:white}
+.result p{color:#dbe3ff;margin:0}
+.total{font-size:36px;font-weight:750;margin:10px 0;overflow-wrap:anywhere}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:13px 6px;border-bottom:1px solid #e8ecf3;text-align:right}
+th:first-child,td:first-child{text-align:left}
+button{border:0;border-radius:10px;padding:12px 18px;background:#e9edfa;color:#243b80;font-weight:600;cursor:pointer}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.total{font-size:30px}.card{padding:20px}}
+</style>
+</head>
+<body>
+<main>
+<small>BONUS CALCULATOR</small>
+<h1>성과급 시나리오 계산기</h1>
+<p>기초금액과 지급률을 바꿔 예상 성과급을 비교하세요.</p>
+<section class="card">
+<div class="grid">
+<label>연간 기초금액 (원)
+<input id="base" type="number" min="0" step="10000" placeholder="예: 100000000">
+<small>적용할 연봉 또는 지급 기준금액을 입력하세요.</small>
+</label>
+<label>기초금액에 더할 금액 (원)
+<input id="extra" type="number" min="0" step="10000" value="0">
+<small>추가 산정금액이 있으면 입력하세요.</small>
+</label>
+<label>일반 성과급 지급률 (%)
+<input id="normal" type="number" min="0" step="0.1" value="0">
+</label>
+<label>특별 성과급 지급률 (%)
+<input id="special" type="number" min="0" step="0.1" value="0">
+</label>
+<label>예상 공제율 (%)
+<input id="deduct" type="number" min="0" max="100" step="0.1" value="0">
+<small>세금·기타 공제를 가정하는 입력값입니다. 실제 세액 계산은 아닙니다.</small>
+</label>
+</div>
+<p><small>계산 가정: 일반 성과급 = 연간 기초금액 × 일반 지급률. 특별 성과급 = (연간 기초금액 + 추가금액) × 특별 지급률. 회사별 실제 산정 기준과 일치하는지 확인하세요.</small></p>
+<button id="reset" type="button">입력 초기화</button>
+</section>
+<section class="card result" aria-live="polite">
+<p>공제 후 예상 금액</p>
+<div id="net" class="total">0원</div>
+<p id="gross">세전 합계 0원</p>
+</section>
+<section class="card">
+<h2>계산 내역</h2>
+<table>
+<tbody>
+<tr><td>일반 성과급</td><td id="normalOut">0원</td></tr>
+<tr><td>특별 성과급</td><td id="specialOut">0원</td></tr>
+<tr><td>예상 공제액</td><td id="deductOut">0원</td></tr>
+</tbody>
+</table>
+</section>
+<section class="card">
+<h2>특별 지급률별 비교</h2>
